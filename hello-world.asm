@@ -1,10 +1,8 @@
 DATA SEGMENT USE16
-MESG DB 'This is my first Assembly Program!', '$'
+MESG DB 'Hello World', '$'
 DATA ENDS
-
 CODE SEGMENT USE16
     ASSUME CS:CODE,DS:DATA
-
 BEG:
     MOV AX, DATA
     MOV DS, AX
