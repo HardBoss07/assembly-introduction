@@ -1,0 +1,185 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+add-2-numbers.exe -- emu8086 assembler version: 4.08  
+ 
+[ 31.12.2024  --  14:56:22 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       DATA SEGMENT USE16
+[   2]    0000: 45 6E 74 65 72 20 66 69 72 73 74 20   FIRSTTEXT DB 'Enter first number: ', '$'
+                6E 75 6D 62 65 72 3A 20 24          
+[   3]    0015: 45 6E 74 65 72 20 73 65 63 6F 6E 64   SECONDTEXT DB 'Enter second number: ', '$'
+                20 6E 75 6D 62 65 72 3A 20 24       
+[   4]    002B: 54 68 65 20 73 75 6D 20 6F 66 20 74   RESULTTEXT DB 'The sum of the numbers is: ', '$'
+                68 65 20 6E 75 6D 62 65 72 73 20 69 
+                73 3A 20 24                         
+[   5]    0047: 0D 0A 24                              NEWLINE DB 13, 10, '$'
+[   6]    004A: 14 00 24 24 24 24 24 24 24 24 24 24   BUFFER DB 20, 0, 20 DUP('$')
+                24 24 24 24 24 24 24 24 24 24       
+[   7]    0060: 00 00 00 00 00 00 24                  RESULT DB 6 DUP(0), '$'
+[   8]        :                                       DATA ENDS
+[   9]        :                                       
+[  10]        :                                       CODE SEGMENT USE16
+[  11]        :                                       ASSUME CS:CODE, DS:DATA
+[  12]        :                                       
+[  13]    0070:                                       BEG:
+[  14]    0070: B8 00 00                              MOV AX, DATA
+[  15]    0073: 8E D8                                 MOV DS, AX
+[  16]        :                                       
+[  17]        :                                       ; Display first prompt
+[  18]    0075: B4 09                                 MOV AH, 9
+[  19]    0077: BA 00 00                              MOV DX, OFFSET FIRSTTEXT
+[  20]    007A: CD 21                                 INT 21H
+[  21]        :                                       
+[  22]        :                                       ; Read first number
+[  23]    007C: B4 0A                                 MOV AH, 0AH
+[  24]    007E: BA 4A 00                              MOV DX, OFFSET BUFFER
+[  25]    0081: CD 21                                 INT 21H
+[  26]        :                                       
+[  27]        :                                       ; Convert first number to integer
+[  28]    0083: BE 4C 00                              LEA SI, BUFFER+2
+[  29]    0086: E8 42 00                              CALL STR_TO_NUM
+[  30]    0089: 8B D8                                 MOV BX, AX
+[  31]        :                                       
+[  32]        :                                       ; Display newline
+[  33]    008B: B4 09                                 MOV AH, 9
+[  34]    008D: BA 47 00                              MOV DX, OFFSET NEWLINE
+[  35]    0090: CD 21                                 INT 21H
+[  36]        :                                       
+[  37]        :                                       ; Display second prompt
+[  38]    0092: B4 09                                 MOV AH, 9
+[  39]    0094: BA 15 00                              MOV DX, OFFSET SECONDTEXT
+[  40]    0097: CD 21                                 INT 21H
+[  41]        :                                       
+[  42]        :                                       ; Read second number
+[  43]    0099: B4 0A                                 MOV AH, 0AH
+[  44]    009B: BA 4A 00                              MOV DX, OFFSET BUFFER
+[  45]    009E: CD 21                                 INT 21H
+[  46]        :                                       
+[  47]        :                                       ; Convert second number to integer
+[  48]    00A0: BE 4C 00                              LEA SI, BUFFER+2
+[  49]    00A3: E8 25 00                              CALL STR_TO_NUM
+[  50]    00A6: 03 C3                                 ADD AX, BX
+[  51]    00A8: 8B D8                                 MOV BX, AX
+[  52]        :                                       
+[  53]        :                                       ; Convert sum to string
+[  54]    00AA: 8B C3                                 MOV AX, BX
+[  55]    00AC: BF 60 00                              LEA DI, RESULT
+[  56]    00AF: E8 2E 00                              CALL NUM_TO_STR
+[  57]        :                                       
+[  58]        :                                       ; Display newline
+[  59]    00B2: B4 09                                 MOV AH, 9
+[  60]    00B4: BA 47 00                              MOV DX, OFFSET NEWLINE
+[  61]    00B7: CD 21                                 INT 21H
+[  62]        :                                       
+[  63]        :                                       ; Display result text
+[  64]    00B9: B4 09                                 MOV AH, 9
+[  65]    00BB: BA 2B 00                              MOV DX, OFFSET RESULTTEXT
+[  66]    00BE: CD 21                                 INT 21H
+[  67]        :                                       
+[  68]        :                                       ; Display the result
+[  69]    00C0: B4 09                                 MOV AH, 9
+[  70]    00C2: BA 60 00                              MOV DX, OFFSET RESULT
+[  71]    00C5: CD 21                                 INT 21H
+[  72]        :                                       
+[  73]        :                                       ; Exit program
+[  74]    00C7: B4 4C                                 MOV AH, 4CH
+[  75]    00C9: CD 21                                 INT 21H
+[  76]        :                                       
+[  77]    00CB:                                       STR_TO_NUM:
+[  78]    00CB: 33 C0                                 XOR AX, AX
+[  79]    00CD: 33 C9                                 XOR CX, CX
+[  80]    00CF: B9 0A 00                              MOV CX, 10
+[  81]        :                                       
+[  82]        :                                       
+[  83]    00D2:                                       STR_TO_NUM_LOOP:
+[  84]    00D2: AC                                    LODSB
+[  85]    00D3: 3C 0D                                 CMP AL, 13
+[  86]    00D5: 74 08                                 JE STR_TO_NUM_DONE
+[  87]    00D7: 2C 30                                 SUB AL, '0'
+[  88]    00D9: F7 E1                                 MUL CX
+[  89]    00DB: 03 C0                                 ADD AX, AX
+[  90]    00DD: EB F3                                 JMP STR_TO_NUM_LOOP
+[  91]        :                                       
+[  92]    00DF:                                       STR_TO_NUM_DONE:
+[  93]    00DF: C3                                    RET
+[  94]        :                                       
+[  95]    00E0:                                       NUM_TO_STR:
+[  96]    00E0: 33 C9                                 XOR CX, CX
+[  97]    00E2: BB 0A 00                              MOV BX, 10
+[  98]        :                                       
+[  99]    00E5: BF 66 00                              LEA DI, RESULT + 6
+[ 100]    00E8: 4F                                    DEC DI
+[ 101]        :                                       
+[ 102]    00E9: 85 C0                                 TEST AX, AX
+[ 103]    00EB: 75 07                                 JNZ NUM_TO_STR_LOOP
+[ 104]    00ED: B2 30                                 MOV DL, '0'
+[ 105]    00EF: 88 15                                 MOV [DI], DL
+[ 106]    00F1: 4F                                    DEC DI
+[ 107]    00F2: EB 0E                                 JMP NUM_TO_STR_DONE
+[ 108]        :                                       
+[ 109]    00F4:                                       NUM_TO_STR_LOOP:
+[ 110]    00F4: 33 D2                                 XOR DX, DX
+[ 111]    00F6: F7 F3                                 DIV BX
+[ 112]    00F8: 80 C2 30                              ADD DL, '0'
+[ 113]    00FB: 88 15                                 MOV [DI], DL
+[ 114]    00FD: 4F                                    DEC DI
+[ 115]    00FE: 85 C0                                 TEST AX, AX
+[ 116]    0100: 75 F2                                 JNZ NUM_TO_STR_LOOP
+[ 117]        :                                       
+[ 118]    0102:                                       NUM_TO_STR_DONE:
+[ 119]    0102: C6 05 24                              MOV BYTE PTR [DI], '$'
+[ 120]    0105: C3                                    RET
+[ 121]        :                                       
+[ 122]        :                                       CODE ENDS
+[ 123]        :                                       END BEG
+[ 124]        :                                       
+[ 125]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 06      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 36      -   check sum (l.byte)
+0013: 36      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 07      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 07      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

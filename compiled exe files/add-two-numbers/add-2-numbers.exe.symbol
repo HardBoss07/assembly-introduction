@@ -1,0 +1,23 @@
+< THE SYMBOL TABLE >  add-2-numbers.exe  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+DATA                     	00000     	-5        	SEGMENT   	(ITSELF)  
+FIRSTTEXT                	00000     	1         	VAR       	DATA      
+SECONDTEXT               	00015     	1         	VAR       	DATA      
+RESULTTEXT               	0002B     	1         	VAR       	DATA      
+NEWLINE                  	00047     	1         	VAR       	DATA      
+BUFFER                   	0004A     	1         	VAR       	DATA      
+RESULT                   	00060     	1         	VAR       	DATA      
+CODE                     	00007     	-5        	SEGMENT   	(ITSELF)  
+BEG                      	00000     	-1        	LABEL     	CODE      
+STR_TO_NUM               	0005B     	-1        	LABEL     	CODE      
+STR_TO_NUM_LOOP          	00062     	-1        	LABEL     	CODE      
+STR_TO_NUM_DONE          	0006F     	-1        	LABEL     	CODE      
+NUM_TO_STR               	00070     	-1        	LABEL     	CODE      
+NUM_TO_STR_LOOP          	00084     	-1        	LABEL     	CODE      
+NUM_TO_STR_DONE          	00092     	-1        	LABEL     	CODE      
+===================================================================================================
+[ 31.12.2024  --  14:56:22 ] 
+< END >
+ 
