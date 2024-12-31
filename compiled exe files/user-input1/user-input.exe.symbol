@@ -1,0 +1,18 @@
+< THE SYMBOL TABLE >  user-input.exe  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+DATA                     	00000     	-5        	SEGMENT   	(ITSELF)  
+MESG                     	00000     	1         	VAR       	DATA      
+BUF                      	00011     	1         	VAR       	DATA      
+MSG                      	00027     	1         	VAR       	DATA      
+NEWLINE                  	00036     	1         	VAR       	DATA      
+CODE                     	00004     	-5        	SEGMENT   	(ITSELF)  
+BEG                      	00000     	-1        	LABEL     	CODE      
+CHECK_CR                 	00019     	-1        	LABEL     	CODE      
+ADD_TERMINATOR           	00022     	-1        	LABEL     	CODE      
+DISPLAY                  	00026     	-1        	LABEL     	CODE      
+===================================================================================================
+[ 31.12.2024  --  12:27:20 ] 
+< END >
+ 

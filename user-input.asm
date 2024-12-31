@@ -1,7 +1,8 @@
 DATA SEGMENT USE16
-MESG DB 'Enter your Name:', '$'
+MESG DB 'Enter your Name: ', '$'
 BUF DB 20, 0, 20 DUP('$')
-MSG DB 'Your Name is: ', '$'
+MSG DB 'Your Name is: ', '$'  
+NEWLINE DB 13, 10, '$'
 DATA ENDS
 
 CODE SEGMENT USE16
@@ -33,7 +34,11 @@ ADD_TERMINATOR:
     DEC SI
     MOV BYTE PTR [SI], '$'
 
-DISPLAY:
+DISPLAY:   
+    MOV AH, 9
+    MOV DX, OFFSET NEWLINE
+    INT 21H
+
     MOV AH, 9
     MOV DX, OFFSET MSG
     INT 21H
